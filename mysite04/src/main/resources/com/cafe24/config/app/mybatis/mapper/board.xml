@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="board">
+
+	<!-- 제목 검색만하고 나중에 더 추가 -->
+	<sql id="findSQL">
+		<if test="findType != null and findType =='T'.toString()">
+			and b.title like CONCAT('%',#{keyword },'%')
+		</if>
+	</sql> 
+	
+		<!-- 제목 검색만하고 나중에 더 추가 -->
+	<sql id="findSQLCount">
+	<where>
+		<if test="findType != null and findType =='T'.toString()">
+			title like CONCAT('%',#{keyword },'%')
+		</if>
+	</where>  
+	</sql>
+  
+  	 <!-- 검색기능 + 페이징 구현  -->
+   <select id="listFind" resultType="boardvo" parameterType="fcri">
+  	 <![CDATA[
+		select b.no, b.title, u.name author, b.content, b.view_count viewCount, 
+				b.reg_date regDate, b.update_date updateDate, b.group_no groupNo, 
+				b.order_no orderNo, b.depth, b.master, u.no as userNo
+		from board b, user u
+		where b.user_no = u.no
+	]]> 
+        <include refid="findSQL" />
+     <![CDATA[          
+        order by group_no desc, master desc, order_no
+         limit #{startPage }, #{numPerPage }
+     ]]> 
+    </select>  
+     
+    <select id = "findCount" resultType = "int">
+	     select count(no)
+	     from board
+	     <include refid="findSQLCount" /> 
+  	</select>
+     
+     
+     
+     
+    <select id = "viewCount" resultType = "long">
+	      update board 
+	      set view_count = view_count + 1 
+	      where no = #{no }
+  	</select>
+    
+	<select id="getList" resultType="boardvo">
+	<![CDATA[
+		select b.no, b.title, u.name author, b.content, b.view_count viewCount, 
+				b.reg_date regDate, b.update_date updateDate, b.group_no groupNo, 
+				b.order_no orderNo, b.depth, b.master, u.no as userNo
+		from board b, user u
+		where b.user_no = u.no
+		order by group_no desc, master desc, order_no
+	]]>
+	</select>
+	
+	<!-- 첫글 작성 -->
+	<insert id="insertFirst" parameterType="boardvo">
+	<![CDATA[
+	insert into board values(null, #{title }, #{userNo } , #{content }, 0, now(), now(),
+	 1, 1, 0, 1)
+	]]>
+	</insert>
+	
+	<!-- 새글 작성 -->
+	<insert id="insert" parameterType="boardvo">
+	<![CDATA[
+	insert into board values(null, #{title }, #{userNo } , #{content }, 0, now(), now(),
+	 (select max(group_no)+1 from board board_as), 1, 0, 1)
+	]]>
+	</insert>
+	
+	<!-- 답글 작성 : 이전 글 order_no +1 -->
+	<insert id="replyOrderNo" parameterType="boardvo">
+	<![CDATA[
+		update board set order_no = order_no+1 where order_no >= #{orderNo }+1
+	]]>
+	</insert>
+		<!-- 답글 작성 -->
+	<insert id="reply" parameterType="boardvo">
+	<![CDATA[
+	 insert into board values(null, #{title }, #{userNo } , #{content }, 0, now(), now(),
+	  #{groupNo }, #{orderNo }+1 , #{depth }+1, 0)
+	]]>
+	</insert>
+	
+	
+	<select id="getView" parameterType="long" resultType="boardvo">
+	<![CDATA[
+		select b.no, b.title, u.name author, b.content, b.view_count viewCount, 
+				b.reg_date regDate, b.update_date updateDate, b.group_no groupNo, 
+				b.order_no orderNo, b.depth, b.master, u.no as userNo
+		from board b, user u
+		where b.user_no = u.no
+		and b.no = #{no }	
+	]]>
+	</select>
+	
+	<select id="delete" parameterType="long">
+	<![CDATA[
+		delete from board
+		where no = #{no }
+	]]>
+	</select>
+	
+	<select id="deleteMaster" parameterType="long">
+	<![CDATA[
+  		delete from board
+		where group_no = #{no } 
+	]]>
+	</select>
+	
+	<update id="update" parameterType="boardvo">
+	<![CDATA[
+		update board set title = #{title }, content = #{content } 
+		 where no = #{no }
+	]]>
+	</update>
+</mapper>

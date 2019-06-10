@@ -1,0 +1,68 @@
+1. Maven Project 생성
+
+2. POM 설정
+
+3. web.xml 설정
+   controller <-- Service <-- Repository <-- SQLSessoion
+   
+4. AppConfig 설정
+	|--- DBConfig: DataSource	
+	|		|--- jdbc.properties
+	|
+	|--- MyBatisConfig : SqlSession, SqlSessionFactory 
+
+5. WebConfig
+	|--- MVCConfig(view resolver..)
+	|--- SecurityConfig
+	|--- MessageConfig
+	|--- FileUploadConfig
+	
+6. GlobalExceptionHandler
+
+7. slf4j, Logback
+
+/mysite
+8. /WEB-INF
+	|--- /classes [ src/main/java, src/main.resource, src/test/java, src/test/resources]
+	|		|--- /com
+	|		|		|--- /cafe24
+	|		|		|		|--- /mysite
+	|		|		|		|		|--- /config
+	|		|		|		|		|		|--- AppConfig
+	|		|		|		|		|		|--- WebConfig
+	|		|		|		|--- /config
+	|		|		|		|		|--- /app     [-> applicationContext.xml]
+	|		|		|		|		|		|--- DBConfig
+	|		|		|		|		|		|--- MyBatisConfig
+	|		|		|		|		|		|--- /mybatis
+	|		|		|		|		|		|		|--- configuration.xml
+	|		|		|		|		|		|		|--- /mappers
+	|		|		|		|		|		|		|		|--- user.xml
+	|		|		|		|		|		|		|		|--- board.xml
+	|		|		|		|		|		|--- /properties
+	|		|		|		|		|		|		|--- jdbc.properties
+	|		|		|		|		|--- /web      [->spring-servlet.xml]
+	|		|		|		|		|		|--- MVCConfig
+	|		|		|		|		|		|--- SecurityConfig
+	|		|		|		|		|		|--- MessageConfig
+	|		|		|		|		|		|--- FileUploadConfig
+	|		|		|		|		|		|--- /messages
+	|		|		|		|		|		|		|--- messages_ko.properties
+	|		|		|		|		|		|--- /properties
+	|		|		|		|		|		|		|--- multipart.properties
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
