@@ -1,0 +1,235 @@
+@CHARSET "UTF-8";
+
+@import "mysite.css";
+
+.modal-title {
+	text-align: center;
+	width: 100%;
+	height: 20px;
+	background-color: #EEE;
+	padding-top: 5px;
+}
+.modalContent .modal-btn1{
+	border: 1px solid #c0c0c0;
+	background-color: #fff;
+	outline: 0;
+	width: 25px;
+}
+
+.modalContent .modal-btn2,
+.modalContent .modal-btn3 {
+	margin-bottom: 20px;
+	border: 1px solid #c0c0c0;
+	background-color: #fff;
+	outline: 0;
+	margin-top: 120px;
+	width: 44px;
+}
+
+.modalContent .modal-btn2 {
+	margin-right: 100px;
+}
+
+.modalContent .modal-btn3 {
+	margin-right: 50px;
+}
+
+.modalContent h4 {
+	padding-top: 25px;
+}
+
+.modalContent input {
+	padding-top: 5px;
+	margin-top: 10px;
+	width: 200px;
+}
+
+.mask {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	left: 0;
+	top: 0;
+	z-index: 10;
+	background: #000;
+	opacity: .5;
+	filter: alpha(opacity = 50);
+}
+
+#modalLayer {
+	display: none;
+	position: relative;
+}
+
+#modalLayer .modalContent {
+	width: 300px;
+	height: 150px;
+	border: 1px solid #ccc;
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	z-index: 11;
+	background: #fff;
+}
+
+#modalLayer .modalContent button {
+	position: absolute;
+	right: 0;
+	top: 0;
+	cursor: pointer;
+}
+
+#list-guestbook li {
+	height: 90px;
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.logo-title {
+	display: inline;
+	width: 150px;
+	height: 150px;
+}
+
+.title {
+	padding-left: 50px;
+	color: gray;
+}
+
+.content {
+	width: 90%;
+	height: 60px;
+	margin-top: 20px;
+	margin-left: 50px;
+	padding-top: 6px;
+	padding-left: 6px;
+	border: 1px solid #c0c0c0;
+	background-color: #EEE;
+}
+
+.profile {
+	background-repeat: no-repeat;
+	background-size: 40px;
+	width: 50px;
+	height: 50px;
+	margin-top: 20px;
+	font-size: 0;
+}
+
+#btn_delete {
+	background-repeat: no-repeat;
+	font-size: 0;
+	width: 50px;
+	height: 50px;
+	margin-top: 48px;
+	margin-left: 20px;
+}
+
+#list-guestbook li>strong, #list-guestbook li>p, #list-guestbook li>a {
+	position: absolute;
+}
+
+.logo {
+	display: inline;
+	float: left;
+	width: 40px;
+	height: 40px;
+	padding-right: 10px;
+}
+
+#master-title {
+	display: inline;
+	float: left;
+}
+
+#submit {
+	margin-bottom: 20px;
+	border: 1px solid #c0c0c0;
+	background-color: #fff;
+	outline: 0;
+}
+
+#submit.hover {
+	background-color: darkgray;
+}
+
+hr {
+	background-color: #EEE;
+}
+
+#add-form input {
+	width: 100%;
+	height: 30px;
+	margin-top: 10px;
+	outline-color: #c0c0c0;
+	padding-top: 2px;
+	padding-left: 2px;
+}
+
+#add-form textarea {
+	margin-top: 10px;
+	width: 100%;
+	height: 100px;
+	border-color: #c0c0c0;
+	padding-top: 5px;
+	padding-left: 2px;
+}
+
+#guestbook {
+	margin: 20px auto;
+	width: 540px;
+}
+
+#guestbook form, #guestbook table {
+	width: 100%
+}
+
+#guestbook table, #guestbook table td {
+	border: 1px solid #333
+}
+
+#guestbook table td {
+	padding: 5px
+}
+
+#guestbook ul {
+	width: 100%;
+	margin-top: 20px
+}
+
+#guestbook ul li {
+	width: 100%;
+	margin-top: 10px
+}
+
+#guestbook.delete-form {
+	height: 200px
+}
+
+#guestbook.delete-form form {
+	width: 300px;
+	padding: 10px;
+	border: 1px solid #666;
+	border-radius: 10px;
+	margin: 50px auto;
+}
+
+#guestbook.delete-form a {
+	display: block;
+	margin: 20px auto;
+	width: 110px
+}
+
+#guestbook.delete-message p {
+	padding: 100px;
+	height: 50px;
+	text-align: center
+}
+
+#guestbook textarea#content {
+	width: 100%;
+	border: none;
+	height: 100px;
+	resize: none;
+	outline: none;
+}

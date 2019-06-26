@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+
+@import "mysite.css";
+
+#gallery > div > h1 {
+	color: #5C5C5C;
+	margin-bottom: 10px;
+	background: url('/assets/images/gallery.png') 0 0 no-repeat;
+	background-size: 35px;
+	padding-left: 40px;
+    width: 70%;
+    float:left;
+    margin-bottom: 20px;
+}
+#gallery > ul > li{
+	position: relative;
+	float: left;
+}
+
+#gallery > ul > li .image {
+	display: block;
+	width: 120px; 
+	height: 120px; 
+	background-size: 120px 100%; 
+	background-repeat: no-repeat;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	border: 2px solid #999;
+}
+
+#gallery > ul > li .del-button{
+	display: none;
+	width: 20px;
+	height: 20px;
+	background-image: url('/assets/images/close.png');
+	background-size: 20px;
+	background-repeat: no-repeat;
+	position: absolute;
+	top:2px;
+	left: 100px;
+	font-size:0;
+}
+
+#gallery ul li:hover a.del-button {
+	display:block;
+}
+
+
+#upload-image { 
+	display: block;
+	float:right;
+	font-weight:bold;
+	color:black;
+	text-decoration:none;
+	border: 1px solid #0099FF;
+	background-color:#fff;
+    width: 100px;
+    height: 30px;
+    padding-top: 10px; 
+	text-align: center;
+}
+
+/* -----------------------------------------  */
+* {
+	margin: 0;
+	padding: 0;
+}
+#gallery {
+	margin: 20px auto;
+	width: 540px;
+}
+
+#gallery ul {
+	width: 100%;
+}
+
+/* 이미지 업로드 팝업 레이어 */
+#dialog-upload-form {
+	text-align: left;
+}
+
+#dialog-upload-form p {
+	padding: 20px 0 5px 0;
+	font-weight: bold;
+	font-size: 1.1em
+}
+
+#dialog-upload-form label, #dialog-upload-form input {
+	display: block;
+}
+
+#dialog-upload-form label {
+	font-weight: bold;
+	margin-top: 10px;
+}
+
+#dialog-upload-form input {
+	outline: none;
+	margin-top: 5px;
+}
+
+#dialog-upload-form input[type='text'] {
+	padding: 5px;
+	border: 2px solid #A9A9A9;
+	width: 260px;
+}

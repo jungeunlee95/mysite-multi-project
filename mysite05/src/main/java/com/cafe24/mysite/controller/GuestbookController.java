@@ -63,6 +63,11 @@ public class GuestbookController {
 		guestbookService.deleteGuestbook(vo);
 		return "redirect:/guestbook";
 	}
+	
+	@RequestMapping(value="/timeline")
+	public String timeline() {
+		return "guestbook/index-timeline";
+	}
 
 }
 
