@@ -63,6 +63,13 @@ public class GuestbookController {
 		guestbookService.deleteGuestbook(vo);
 		return "redirect:/guestbook";
 	}
+	
+	
+	//  --- 방명록 ajax ---
+	@RequestMapping(value="/spa", method=RequestMethod.GET )
+	public String ajax() {
+		return "guestbook/index-spa";
+	}
 
 }
 

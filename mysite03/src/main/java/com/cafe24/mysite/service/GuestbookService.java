@@ -18,6 +18,10 @@ public class GuestbookService {
 		return guestbookDao.getList();
 	}
 	
+	public List<GuestbookVo> getList(Long page){
+		return guestbookDao.getList(page);
+	}
+	
 	public boolean addGuestbook(GuestbookVo vo){
 		return guestbookDao.insert(vo);
 	}

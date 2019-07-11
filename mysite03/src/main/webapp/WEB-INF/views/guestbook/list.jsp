@@ -52,7 +52,7 @@
 						</tr>
 						<tr>
 							<td colspan=4>
-							<form:textarea path="contents"/>
+							<form:textarea path="contents" id="guest-contents"/>
 							<p style="font-weight: bold; color: red; text-align: left; padding: 0;">
 								<form:errors path="contents" />
 							</p>
