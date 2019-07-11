@@ -10,6 +10,10 @@ public class JSONResult {
 		return new JSONResult("success", null, data);
 	}
 	
+	public static JSONResult success(Object data, String value) {
+		return new JSONResult("success", value, data);
+	}
+	
 	public static JSONResult fail(String message) {
 		return new JSONResult("fail", message, null);
 	}

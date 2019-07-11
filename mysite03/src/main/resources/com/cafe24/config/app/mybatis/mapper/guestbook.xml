@@ -15,8 +15,15 @@
 	<![CDATA[
 		select no, name, contents, date_format(reg_date, '%Y-%m-%d %h:%i:%s') as regDate
 		from guestbook
-		order by reg_date desc
-		limit #{startNo}, 5
+		]]>
+		<if test="_parameter > 0">
+		<![CDATA[
+			where no < #{_parameter}
+		]]>
+		</if> 
+	<![CDATA[
+		order by no desc
+		limit 0, 5
 	]]>
 	</select> 
 	
@@ -25,7 +32,10 @@
 		insert into guestbook  
 		values(null, #{name }, #{password }, #{contents }, now())
 	]]>
-	</insert>
+	<selectKey keyProperty="no" resultType="long" order="AFTER">
+		select last_insert_id()
+	</selectKey>
+	</insert> 
 	
 	<delete id="delete" parameterType="guestbookvo">
 	<![CDATA[

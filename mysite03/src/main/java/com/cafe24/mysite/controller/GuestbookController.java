@@ -44,7 +44,7 @@ public class GuestbookController {
 			model.addAllAttributes(result.getModel());
 			return "guestbook/list";
 		}
-		guestbookService.addGuestbook(guestbookVo);
+		guestbookService.writeContent(guestbookVo);
 		return "redirect:/guestbook";
 	}
 	

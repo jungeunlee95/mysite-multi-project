@@ -31,8 +31,8 @@ public class GuestbookDao {
 		return result;
 	}
 	 
-	public List<GuestbookVo> getList(Long startIndex) {
-		List<GuestbookVo> result = sqlSession.selectList("guestbook.getList2", (startIndex-1)*COUNT_PER_PAGE);
+	public List<GuestbookVo> getList(Long lastNo) {
+		List<GuestbookVo> result = sqlSession.selectList("guestbook.getList2", lastNo);
 		return result; 
 	}
 
