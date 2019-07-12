@@ -14,7 +14,7 @@ body{
 	margin-bottom: 30px;
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset{
-	float: none;
+	float: none; 
 	text-align:center
 }
 .ui-dialog .ui-dialog-buttonpane button {
@@ -42,22 +42,67 @@ body{
 }
 </style>
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-	var isEnd = false;
+<script> 
+	var emptyFunction = function(){};
+	////////////////////// jQuery Plugin //////////////////////
+	(function($){
+		$.fn.flash = function(){
+			$(this).click(function(){
+				var isBlink = false;
+				var $that = $(this);
+				setInterval(function() {
+					$that.css("backgroundColor", isBlink ? "#f00" : "#aaa");
+					isBlink = !isBlink;
+				}, 1000);
+			});
+		}
+	})(jQuery); 
+ 
+	// form에서 사용
+	var messageBox = function(title, message, callback){
+		$("#dialog-message").attr("title", title);
+		$("#dialog-message p").text(message);
+		$("#dialog-message").dialog({
+			modal:true,
+			buttons:{
+				"확인" : function(){
+					$(this).dialog("close"); 
+				}
+			}, 
+			close : function(){
+				(callback || emptyFunction)();
+			}
+		});   
+	}
+
+	////////////////////// import ejs template //////////////////////
+	var listItemTemplate = new EJS({
+		url : '${pageContext.request.contextPath }/assets/js/ejs-templates/guestbook-list-item.ejs'
+	});
+	
+	var listTemplate = new EJS({
+		url : '${pageContext.request.contextPath }/assets/js/ejs-templates/guestbook-list.ejs' 
+	});
+   //////////////////////////////////////////////////////////////////
+   
+	var isEnd = false; 
 	var userName = '${authUser.name}';
 	/* console.log(userName); */
-	
-	var render = function(vo, mode=false){
+	 
+	var render = function(vo, mode){
 		// 실제로는 template library를 사용한다. (html 렌더링 라이브러리)
 		// -> ejs, underscore, mustache
-		var html =  "<li data-no='"+ vo.no +"'>"+
+/* 		var html =  "<li data-no='"+ vo.no +"'>"+
 						"<strong>"+vo.name+"</strong>"+
 												// 이 문자열의 모든(g)거에 다 적용해라 . \n -> <br>
 						"<p>"+ vo.contents.replace(/</gi, "&lt;").replace(/>/gi, "&gt;").replace(/\n/gi, "<br>") + "</p><br>"+
 						"<strong></strong>"+
 						"<a href='#' data-no='"+ vo.no +"'>삭제</a>"+ 
-					"</li>"; 
+					"</li>"; */ 
+					
+		var html =  listItemTemplate.render(vo);
 		
 		if(mode){			
 			$("#list-guestbook").prepend(html); 			
@@ -93,10 +138,12 @@ body{
 				}
 				
 				//rendering
-				$.each(response.data, function(index, vo){
-					render(vo);
-				});
 				//$.each(response.data, render); 
+				//$.each(response.data, function(index, vo){
+				//	render(vo); 
+				//});
+				var html = listTemplate.render(response);
+				$("#list-guestbook").append(html);
 				
 			},				// jqeury XML Http Request
 			error : function(jqXHR, status, e){
@@ -156,10 +203,6 @@ body{
             } 
           });
 		
-		$("#btn-next").click(function() {
-			fetchList();
-		});
-		
 		$(window).scroll(function(){
 			var $window = $(this); // window가 매핑된 json 객체 
 			var scrollTop = $window.scrollTop();
@@ -182,10 +225,28 @@ body{
 			// validation (client side, UX - 클라이언트쪽에서 해도 서버에서도 반드시 해줘야함)
 			// 생략  plugin 사용해서 할 수 있음 (jQuery plugin)
 			vo.name = $("#input-name").val();
-			vo.password = $("#input-password").val();
-			vo.contents = $("#tx-content").val();
+			if(vo.name == ''){
+				messageBox('글남기기', '이름은 필수 입력 항목입니다.', function(){
+					$('#input-name').focus(); 
+				});
+				return;
+			}
 			
-			// console.log( $.param(vo) ); 		    
+			vo.password = $("#input-password").val();
+			if(vo.password == ''){
+				messageBox('글남기기', '비밀번호는 필수 입력 항목입니다.', function(){
+					$('#input-password').focus(); 
+				});
+				return;
+			}
+			
+			vo.contents = $("#tx-content").val(); 
+			if(vo.contents == ''){
+				messageBox('글남기기', '내용은 필수 입력 항목입니다.');
+				return; 
+			} 
+			
+			// console.log( $.param(vo) ); 		     
 			// => name=ff&password=ff&contents=ff   
 			// console.log( JSON.stringify(vo) );        
 			// => {"name":"ff","password":"ff","contents":"ff"}
@@ -205,6 +266,7 @@ body{
 					}
 					
 					//rendering
+					var html =  listItemTemplate.render(response.data);
 					render(response.data, true);
 					
 					// reset form
@@ -215,7 +277,7 @@ body{
 					console.error(status + " : " + e);
 				}
 				
-			});
+			}); 
 			
 		}); 
 		
@@ -235,16 +297,25 @@ body{
 
 		// 최초리스트 가져오기  
 		fetchList();
+		
+		
+		$("#btn-next").flash();
+		$("#btn-next").click(function() {
+			//fetchList();
+		});
 	});
 </script> 
 </head>
-<body>
+<body> 
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
 			
 				<h1>방명록</h1>
+				<br>
+				<button id="btn-next">jquery flash </button>
+				<br>
 				<form id="add-form" action="/dd" method="post">
 					<input type="text" id="input-name" placeholder="이름">
 					<input type="password" id="input-password" placeholder="비밀번호">
@@ -267,7 +338,6 @@ body{
   				</form>
 			</div>
 			
-			<button id="btn-next">nextPage</button>
 			
 			<div id="dialog-message" title="" style="display:none">
   				<p></p>
