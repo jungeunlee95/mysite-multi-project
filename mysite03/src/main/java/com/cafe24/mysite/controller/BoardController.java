@@ -44,7 +44,7 @@ public class BoardController {
 	}
 	
 //	@Auth(role=Auth.Role.USER)
-	@Auth
+//	@Auth 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public String write(@AuthUser UserVo authUser,
 						@ModelAttribute BoardVo boardVo,
@@ -52,7 +52,7 @@ public class BoardController {
 		return "board/write";
 	}
 
-	@Auth
+//	@Auth
 	@RequestMapping(value = "/write/{no}", method = RequestMethod.GET)
 	public String write(@AuthUser UserVo authUser,
 						@ModelAttribute("fCri") FindCriteria fCri, Model model, 
@@ -62,7 +62,7 @@ public class BoardController {
 		return "board/write";
 	}
 
-	@Auth
+//	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public String write(@AuthUser UserVo authUser,
 						@ModelAttribute("fCri") FindCriteria fCri,
@@ -125,7 +125,7 @@ public class BoardController {
 		return "board/view";
 	}
 	
-	@Auth
+//	@Auth
 	@RequestMapping(value = "/delete/{no}")
 	public String delete(@AuthUser UserVo authUser,
 						 @PathVariable(value = "no") Long no, Model model,
@@ -142,7 +142,7 @@ public class BoardController {
 		return "redirect:/board";
 	}
 
-	@Auth
+//	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
 	public String modify(@AuthUser UserVo authUser,
 						 @PathVariable(value = "no") Long no, 
@@ -156,7 +156,7 @@ public class BoardController {
 		return "board/modify";
 	}
 
-	@Auth
+//	@Auth
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
 	public String modify(@AuthUser UserVo authUser,
 						 BoardVo vo, 

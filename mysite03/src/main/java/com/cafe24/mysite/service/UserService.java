@@ -1,6 +1,14 @@
 package com.cafe24.mysite.service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import org.springframework.stereotype.Service;
 
 import com.cafe24.mysite.repository.UserDao;
@@ -33,5 +41,13 @@ public class UserService {
 		return userDao.update(userVo);
 	}
 	
-
 }
+
+
+
+
+
+
+
+
+

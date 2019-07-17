@@ -20,7 +20,7 @@ $(function(){
 	var dialogUpload = $( "#dialog-upload-form" ).dialog({
 		autoOpen: false,
 		height: 280,
-		width: 300,
+		width: 300, 
 		modal: true,
 		buttons: {
 			"업로드": function() {
@@ -47,7 +47,7 @@ $(function(){
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
-			<div id="gallery">
+			<div id="gallery"> 
 				<div id="super-title">
 					<h1>갤러리</h1>
 					<span><a href="" id="upload-image">이미지 올리기</a></span>
@@ -241,4 +241,4 @@ $(function(){
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
-</html>
+</html> 
