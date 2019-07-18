@@ -6,12 +6,12 @@
 	<insert id="insert" parameterType="uservo">
 	<![CDATA[
 		insert into user
-		values(null, #{name }, #{email }, #{password }, #{gender }, 'USER', now())
+		values(null, #{name }, #{email }, #{password }, #{gender }, 'ROLE_USER', now())
 	]]>
 	<selectKey keyProperty="no" resultType="long" order="AFTER">
 	<![CDATA[
 		select last_insert_id()
-	]]>
+	]]> 
 	</selectKey>
 	</insert> 
 

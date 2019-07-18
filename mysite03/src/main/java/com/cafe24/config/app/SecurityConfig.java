@@ -1,13 +1,18 @@
 package com.cafe24.config.app;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /*
@@ -95,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
 		// 모두 허용 ( 위에서 걸리면(url 매칭)-저기있는 URL이 아니라면, 밑으로 안내려옴 ) - 2가지 방법
 //		.antMatchers("/**").permitAll(); 
-		.anyRequest().permitAll();
+		.anyRequest().permitAll()
 		
  
 		// Temporary for Testing
@@ -105,33 +110,57 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		//
 		// 2. 로그인 설정
 		//
-		http
+		.and()
 		.formLogin()
 		.loginPage("/user/login")
 		.loginProcessingUrl("/user/auth")  // view form의 action과 맞아야함
 		.failureUrl("/user/login?result=fail")
 		.defaultSuccessUrl("/", true)
 		.usernameParameter("email")
-		.passwordParameter("password");
+		.passwordParameter("password")
 		
 		//
 		// 3. 로그아웃 설정
 		//
-		http
+		.and()
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
 		.logoutSuccessUrl("/")
-		.invalidateHttpSession(true);
+		.invalidateHttpSession(true)
+		
+		//
+		// 4. Access Denial Handler
+		//
+		.and()
+		.exceptionHandling()
+		.accessDeniedPage("/WEB-INF/views/error/403.jsp");
+		
+		
 	}
 
 	// UserDetailService를 설정
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// 사용자 세부 서비스를 설정하기 위한 오버라이딩이다.
-		auth.userDetailsService(userDetailsService);
+		auth
+		.userDetailsService(userDetailsService)
+		
+		// 프로바이더 하나 만들기
+		.and()
+		.authenticationProvider(authenticationProvider());
 	}
-
 	
+	@Bean
+	public AuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService);
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
 	
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
 }
