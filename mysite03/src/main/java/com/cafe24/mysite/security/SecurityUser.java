@@ -7,18 +7,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public class SecurityUser implements UserDetails {
 	
+	// domain fields
+	private Long no;
+	private String name;  // biz data
+
+	// security fields
 	private Collection<? extends GrantedAuthority> authorities;
-	private String username;  // principal - biz name : email
+	private String username;  // principal(email)
 	private String password;  // credential
 	
-	// etc
-	private String name;  // biz data
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// ROLE
 		return authorities;
 	}
+
+	
+	public Long getNo() {
+		return no;
+	}
+
+
+	public void setNo(Long no) {
+		this.no = no;
+	}
+
 
 	@Override
 	public String getPassword() {
