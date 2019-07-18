@@ -11,7 +11,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import com.cafe24.config.web.FileuploadConfig;
 import com.cafe24.config.web.MVCConfig;
 import com.cafe24.config.web.MessageConfig;
-import com.cafe24.config.web.SecurityConfig;
 
 @Configuration
 @EnableAspectJAutoProxy

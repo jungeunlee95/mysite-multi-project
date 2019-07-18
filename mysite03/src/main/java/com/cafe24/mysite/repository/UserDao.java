@@ -15,14 +15,7 @@ public class UserDao {
 	private SqlSession sqlSession;
 	
 	public UserVo get(String email) {	
-		UserVo vo = new UserVo();
-		vo.setName("이정은");
-		vo.setNo(1L);
-		vo.setEmail("aaa");
-		vo.setPassword("1234");
-		vo.setRole("ROLE_USER");
-		return vo;
-//		return sqlSession.selectOne("user.getByEmail", email);
+		return sqlSession.selectOne("user.getByEmail", email);
 	}
 	
 	public UserVo get(Long no) {

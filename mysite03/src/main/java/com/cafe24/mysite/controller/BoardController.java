@@ -19,12 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cafe24.mysite.dto.FindCriteria;
-import com.cafe24.mysite.dto.PagingMaker;
+import com.cafe24.mysite.security.AuthUser;
+import com.cafe24.mysite.security.SecurityUser;
 import com.cafe24.mysite.service.BoardService;
 import com.cafe24.mysite.vo.BoardVo;
 import com.cafe24.mysite.vo.UserVo;
-import com.cafe24.security.Auth;
-import com.cafe24.security.AuthUser;
 
 @Controller
 @RequestMapping("/board")
@@ -46,7 +45,7 @@ public class BoardController {
 //	@Auth(role=Auth.Role.USER)
 //	@Auth 
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
-	public String write(@AuthUser UserVo authUser,
+	public String write(@AuthUser SecurityUser securityUser,
 						@ModelAttribute BoardVo boardVo,
 						@ModelAttribute("fCri") FindCriteria fCri) {
 		return "board/write";
@@ -54,7 +53,7 @@ public class BoardController {
 
 //	@Auth
 	@RequestMapping(value = "/write/{no}", method = RequestMethod.GET)
-	public String write(@AuthUser UserVo authUser,
+	public String write(@AuthUser SecurityUser securityUser,
 						@ModelAttribute("fCri") FindCriteria fCri, Model model, 
 						@PathVariable(value = "no") Long no,
 						@ModelAttribute BoardVo boardVo) {
@@ -64,7 +63,7 @@ public class BoardController {
 
 //	@Auth
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	public String write(@AuthUser UserVo authUser,
+	public String write(@AuthUser SecurityUser securityUser,
 						@ModelAttribute("fCri") FindCriteria fCri,
 						Model model,
 						@ModelAttribute @Valid BoardVo boardVo,
@@ -127,7 +126,7 @@ public class BoardController {
 	
 //	@Auth
 	@RequestMapping(value = "/delete/{no}")
-	public String delete(@AuthUser UserVo authUser,
+	public String delete(@AuthUser SecurityUser securityUser,
 						 @PathVariable(value = "no") Long no, Model model,
 						 @ModelAttribute("fCri") FindCriteria fCri) {
 		Boolean result = null;
@@ -144,12 +143,12 @@ public class BoardController {
 
 //	@Auth
 	@RequestMapping(value = "/modify/{no}", method = RequestMethod.GET)
-	public String modify(@AuthUser UserVo authUser,
+	public String modify(@AuthUser SecurityUser securityUser,
 						 @PathVariable(value = "no") Long no, 
 						 Model model, 
 						 @ModelAttribute("fCri") FindCriteria fCri) {
 		BoardVo boardVo = boardService.getBoardView(no);
-		if(boardVo.getUserNo()!=authUser.getNo()) {
+		if(boardVo.getUserNo()!=securityUser.getNo()) {
 			return "redirect:/board";
 		}
 		model.addAttribute("boardVo", boardVo);
@@ -158,7 +157,7 @@ public class BoardController {
 
 //	@Auth
 	@RequestMapping(value = "/modify", method = RequestMethod.POST)
-	public String modify(@AuthUser UserVo authUser,
+	public String modify(@AuthUser SecurityUser securityUser,
 						 BoardVo vo, 
 						 Model model, 
 						 @ModelAttribute("fCri") FindCriteria fCri) {

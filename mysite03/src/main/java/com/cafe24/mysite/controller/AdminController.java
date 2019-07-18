@@ -4,12 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.cafe24.mysite.security.AuthUser;
+import com.cafe24.mysite.security.SecurityUser;
 import com.cafe24.mysite.service.AdminService;
 import com.cafe24.mysite.vo.UserVo;
-import com.cafe24.security.Auth;
-import com.cafe24.security.AuthUser;
 
-@Auth(role=Auth.Role.ADMIN)
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -18,26 +17,26 @@ public class AdminController {
 	private AdminService adminService;
 	
 	@RequestMapping({"","/main"})
-	public String main(@AuthUser UserVo authUser) {
+	public String main(@AuthUser SecurityUser securityUser) {
 		return "admin/main";
 	}
 	@RequestMapping("/main/update")
-	public String mainUpdate(@AuthUser UserVo authUser) {
+	public String mainUpdate(@AuthUser SecurityUser securityUser) {
 		return "admin/main";
 	}
 
 	@RequestMapping("/user")
-	public String user(@AuthUser UserVo authUser) {
+	public String user(@AuthUser SecurityUser securityUser) {
 		return "admin/user";
 	}
 	
 	@RequestMapping("/board")
-	public String board(@AuthUser UserVo authUser) {
+	public String board(@AuthUser SecurityUser securityUser) {
 		return "admin/board";
 	}
 	
 	@RequestMapping("/guestbook")
-	public String guestbook(@AuthUser UserVo authUser) {
+	public String guestbook(@AuthUser SecurityUser securityUser) {
 		return "admin/guestbook";
 	}
 }

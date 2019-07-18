@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cafe24.mysite.security.AuthUser;
+import com.cafe24.mysite.security.SecurityUser;
 import com.cafe24.mysite.service.UserService;
 import com.cafe24.mysite.vo.UserVo;
-import com.cafe24.security.Auth;
-import com.cafe24.security.AuthUser;
 
 @Controller
 @RequestMapping("/user")
@@ -58,20 +58,18 @@ public class UserController {
 		return "user/login";
 	}
 
-	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
-	public String update(@AuthUser UserVo authUser, Model model) {
-		UserVo userVo = userService.getUser(authUser.getNo());
+	public String update(@AuthUser SecurityUser securityUser, Model model) {
+		UserVo userVo = userService.getUser(securityUser.getNo());
 		model.addAttribute("userVo", userVo);
 		return "user/update";
 	}
 
-	@Auth
 	@RequestMapping(value = "/update", method = RequestMethod.POST)
-	public String update(@AuthUser UserVo authUser, @ModelAttribute UserVo userVo, Model model) {
+	public String update(@AuthUser SecurityUser securityUser, @ModelAttribute UserVo userVo, Model model) {
 		userService.updateUser(userVo);
 		// session의 authUser 변경
-		authUser.setName(userVo.getName());
+		securityUser.setName(userVo.getName());
 		return "redirect:/user/update?result=success";
 	}
 
