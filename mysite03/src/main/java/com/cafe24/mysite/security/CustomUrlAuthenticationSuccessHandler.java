@@ -52,7 +52,7 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 		if (accept == null || accept.matches(".*application/json.*") == false) {
 
 			request.getSession(true).setAttribute("loginNow", true);
-			getRedirectStrategy().sendRedirect(request, response, "/guestbook");  // 메인으로 돌아가!
+			getRedirectStrategy().sendRedirect(request, response, "/");  // 메인으로 돌아가!
 			return;
 		}
 

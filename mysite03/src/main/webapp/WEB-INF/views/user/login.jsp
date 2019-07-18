@@ -23,29 +23,29 @@
 	
 	$(function(){
 		$('#login-form').submit(function(event){
-			event.preventDefault();
+			event.preventDefault(); 
 			var params = "email=" + $('#email').val() + "&password=" + $('#password').val()
-			 
-			$.ajaxSetup({
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader(csrfHeader, csrfToken);
+			 			+ "&remember-me=" +  $("#remember-me").prop("checked"); 
+			$.ajaxSetup({ 
+				beforeSend: function(xhr) { 
+					xhr.setRequestHeader(csrfHeader, csrfToken); 
 				}  
-			})
+			}) 
 			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user/auth",
 				type : "post",
-				dataType : "json",
+				dataType : "json", 
 				data : params,
-				success : function(response) {
+				success : function(response) { 
 					console.log(response);
 				}, error : function(jqXHR, status, e) {
 					console.error(status + " : " + e);
 				}
 		 
-			});	 
-		});
-	});
+			});	  
+		});  
+	}); 
 	 
 </script>	
 
@@ -55,25 +55,26 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp">
 		</c:import>
 		<div id="content">
-			<div id="user">
+			<div id="user"> 
+			
 				<form id="login-form" name="loginform" method="post"
 					action="${pageContext.servletContext.contextPath}/user/auth">
 					<sec:csrfInput />
-					<input type="hidden" name="a" value="login" /> <label
-						class="block-label" for="email">이메일</label> <input id="email"
-						name="email" type="text" value=""> 
-						<label class="block-label">패스워드</label> 
-						<input id="password" name="password" type="password" value=""> 
+					<label class="block-label" for="email">이메일</label> 
+					<input id="email" name="email" type="text" value=""> 
+					
+					<label class="block-label">패스워드</label> 
+					<input id="password" name="password" type="password" value=""> 
 						
-						<label class="block-label">자동로그인</label>
-						<input name="remember-me" type="checkbox" value="">
-						 
-					<c:if test="${result == 'fail' }">
+					<label class="block-label">자동로그인</label> 
+					<input id="remember-me" name="remember-me" type="checkbox">
+
+					<c:if test="${result == 'fail' }"> 
 						<p style="color: red;">로그인에 실패 했습니다.</p>
 					</c:if>
-
 					<input type="submit" value="로그인">
 				</form>
+				
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp">
