@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%pageContext.setAttribute( "newLine", "\n" );%>
 <!DOCTYPE html>
@@ -14,43 +15,48 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/lightbox.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
-$(function(){
-	// 업로드 다이알로그
-	var dialogUpload = $( "#dialog-upload-form" ).dialog({
-		autoOpen: false,
-		height: 280,
-		width: 300, 
-		modal: true,
-		buttons: {
-			"업로드": function() {
-				$( "#dialog-upload-form form" ).submit();
-				$( this ).dialog( "close" );
+
+<sec:authorize access="hasRole('ROLE_ADMIN')" >
+	<script type="text/javascript">
+	$(function(){
+		// 업로드 다이알로그
+		var dialogUpload = $( "#dialog-upload-form" ).dialog({
+			autoOpen: false,
+			height: 280,
+			width: 300, 
+			modal: true, 
+			buttons: {
+				"업로드": function() {
+					$( "#dialog-upload-form form" ).submit();
+					$( this ).dialog( "close" );
+				},
+				"취소" : function() {
+					$( this ).dialog( "close" );
+				}
 			},
-			"취소" : function() {
-				$( this ).dialog( "close" );
+			close: function() {
+				$( "#dialog-upload-form form" ).get(0).reset();	
 			}
-		},
-		close: function() {
-			$( "#dialog-upload-form form" ).get(0).reset();	
-		}
-	});
-		
-	$("#upload-image").click( function(event) {
-		event.preventDefault();
-		dialogUpload.dialog( "open" );
-	});
-});	
-</script>
+		});
+			
+		$("#upload-image").click( function(event) {
+			event.preventDefault();
+			dialogUpload.dialog( "open" );
+		});
+	});	
+	</script>
+</sec:authorize>
 </head>
 <body>
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="gallery"> 
-				<div id="super-title">
+				<div id="super-title">  
 					<h1>갤러리</h1>
-					<span><a href="" id="upload-image">이미지 올리기</a></span>
+					<sec:authorize access="hasRole('ROLE_ADMIN')" >
+						<span><a href="" id="upload-image">이미지 올리기</a></span>
+					</sec:authorize>
 				</div>
 				<ul>
 						<li>
