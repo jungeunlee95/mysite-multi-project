@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>  
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -65,7 +66,7 @@
 					name="joinForm" 
 					method="post"
 					action="${pageContext.servletContext.contextPath}/user/join">
-				
+				<sec:csrfInput />
 				<label class="block-label" for="name">이름</label> 
 				<input id="name" name="name" type="text" value="">
 				<spring:hasBindErrors name="userVo">

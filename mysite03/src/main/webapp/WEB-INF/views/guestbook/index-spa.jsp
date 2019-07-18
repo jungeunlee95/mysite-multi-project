@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%> 
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -44,7 +45,12 @@ body{
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/ejs/ejs.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<sec:csrfMetaTags />
 <script> 
+	var csrfParameter = $('meta[name="_csrf_parameter"]').attr('content')
+	var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
+	var csrfToken = $('meta[name="_csrf_token"]').attr('content')
+	
 	var emptyFunction = function(){};
 	////////////////////// jQuery Plugin //////////////////////
 	(function($){

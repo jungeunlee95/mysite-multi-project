@@ -97,9 +97,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 //		.antMatchers("/**").permitAll(); 
 		.anyRequest().permitAll();
 		
-
+ 
 		// Temporary for Testing
-		http.csrf().disable();
+		//http.csrf().disable();
 
 		
 		//
