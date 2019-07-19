@@ -39,9 +39,9 @@ import com.cafe24.mysite.security.CustomUrlAuthenticationSuccessHandler;
 	16. FilterSecurityInterceptor				( auto-config default )
 */
 
-@Configuration
-@EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter{
+//@Configuration
+//@EnableWebSecurity
+public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -131,6 +131,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.logout()
 		.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
 		.logoutSuccessUrl("/")
+		.deleteCookies("JSESSIONID") 
 		.invalidateHttpSession(true)
 		
 		//

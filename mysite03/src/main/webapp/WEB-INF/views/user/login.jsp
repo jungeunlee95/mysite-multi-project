@@ -21,9 +21,9 @@
 	var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
 	var csrfToken = $('meta[name="_csrf"]').attr('content')  
 	
-	$(function(){
+	$(function(){ 
 		$('#login-form').submit(function(event){
-			event.preventDefault(); 
+			//event.preventDefault(); 
 			var params = "email=" + $('#email').val() + "&password=" + $('#password').val()
 			 			+ "&remember-me=" +  $("#remember-me").prop("checked"); 
 			$.ajaxSetup({ 
