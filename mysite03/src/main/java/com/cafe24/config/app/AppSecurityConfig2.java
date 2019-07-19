@@ -41,6 +41,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.logout.CookieClearingLogoutHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -82,13 +83,13 @@ public class AppSecurityConfig2 {
 				exceptionTranslationFilter(),
 
 				// 6.
-				filterSecurityInterceptor()
+				filterSecurityInterceptor()		
 
 		));
 
 		return new FilterChainProxy(filterChains);
 	}
-
+	
 	/**
 	 * 1. SecurityContextPersistenceFilter
 	 * 
