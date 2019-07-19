@@ -17,20 +17,21 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
 <sec:csrfMetaTags />
 <script> 
-	var csrfParameter = $('meta[name="_csrf_parameter"]').attr('content')
+ 	var csrfParameter = $('meta[name="_csrf_parameter"]').attr('content')
 	var csrfHeader = $('meta[name="_csrf_header"]').attr('content')
-	var csrfToken = $('meta[name="_csrf"]').attr('content')  
+	var csrfToken = $('meta[name="_csrf"]').attr('content')   
 	
 	$(function(){ 
 		$('#login-form').submit(function(event){
-			//event.preventDefault(); 
+			event.preventDefault(); 
 			var params = "email=" + $('#email').val() + "&password=" + $('#password').val()
 			 			+ "&remember-me=" +  $("#remember-me").prop("checked"); 
-			$.ajaxSetup({ 
+			 
+ 			$.ajaxSetup({ 
 				beforeSend: function(xhr) { 
 					xhr.setRequestHeader(csrfHeader, csrfToken); 
 				}  
-			}) 
+			})  
 			
 			$.ajax({
 				url : "${pageContext.request.contextPath}/user/auth",
@@ -39,12 +40,13 @@
 				data : params,
 				success : function(response) { 
 					console.log(response);
+					location.href='${pageContext.request.contextPath}/'; 
 				}, error : function(jqXHR, status, e) {
 					console.error(status + " : " + e);
 				}
-		 
-			});	  
-		});  
+		  
+			});	   
+		});   
 	}); 
 	 
 </script>	

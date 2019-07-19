@@ -39,8 +39,8 @@ import com.cafe24.mysite.security.CustomUrlAuthenticationSuccessHandler;
 	16. FilterSecurityInterceptor				( auto-config default )
 */
 
-//@Configuration
-//@EnableWebSecurity
+@Configuration
+@EnableWebSecurity
 public class AppSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
